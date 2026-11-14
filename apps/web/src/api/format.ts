@@ -5,6 +5,10 @@ const nf2 = new Intl.NumberFormat('fr-FR', { minimumFractionDigits: 2, maximumFr
 export const eur = (v: number | null | undefined, dec = 0) =>
   v === null || v === undefined ? '—' : `${(dec ? nf2 : nf).format(v)} €`;
 
+/** Euros with an explicit + on gains (losses already carry their minus). */
+export const signedEur = (v: number | null | undefined, dec = 0) =>
+  v !== null && v !== undefined && v > 0 ? `+${eur(v, dec)}` : eur(v, dec);
+
 export const pct = (v: number | null | undefined, dec = 1, signed = false) =>
   v === null || v === undefined ? '—'
     : `${signed && v > 0 ? '+' : ''}${(v * 100).toFixed(dec).replace('.', ',')} %`;

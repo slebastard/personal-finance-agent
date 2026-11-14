@@ -174,8 +174,17 @@ pnpm test                         # arrondis + PARITÉ TypeScript vs `pfa report
 - **Arrondis** : `apps/server/src/common/money.ts` reproduit le `round()` de Python (moitié au pair,
   sur l'expansion décimale exacte). Ni `Math.round` ni `toFixed` ne conviennent. La table de test est
   **générée depuis Python**, pas écrite à la main.
-- **Palette** : `apps/web/src/theme.css` reprend la palette validée (clair + sombre). Le thème ECharts
-  en dérive. Toute teinte ajoutée repasse par `node scripts/validate_palette.js` (clair **et** sombre ;
-  `--ordinal` pour une rampe). La rampe de qualité `--q-1..5` (ordinale, bleu) y est validée ; un nuage de
+- **Design system** (`apps/web/src/theme.css`) : une seule « boîte » (rail latéral, barre du haut, en-tête de
+  page, cartes) = même surface, même rayon, même police (Outfit), séparées par le jeton `--gap` ; fond de page à
+  points, cartes à 92 % d'opacité. Clair = cartes blanches + ombre douce ; sombre = cartes relevées + filet.
+  Le thème (système / clair / sombre) est résolu en `data-theme` par un script en tête de `index.html`
+  (pas de flash), `ThemeProvider` le maintient, et la page se **remonte** au changement de thème (les
+  graphiques lisent les variables CSS à leur construction).
+- **Couleurs** : l'émeraude est la couleur des DONNÉES (courbes, barres, accents). Les gains/pertes ont leurs
+  propres verts/rouges (`--gain`, `--loss`), **toujours avec flèche et signe**. L'ordre catégoriel (émeraude
+  d'abord), la rampe ordinale verte des notes de qualité et les surfaces de cartes ont été validés dans les
+  DEUX modes : `node scripts/validate_palette.js` (`--ordinal` pour une rampe) ; l'ordre se re-dérive avec
+  `node scripts/search_palette_order.mjs`. Tout changement de teinte ou de surface repasse par là. Un nuage de
   bulles est une forme « toutes paires » : une seule teinte (la palette n'en valide que 3 dans ce cas).
+  Le nom affiché dans la barre du haut vient de `display_name` dans `profile/manual_inputs.json` (privé).
 - **`pfa rebuild` conserve les transactions** (elles viennent des CSV Bankin', que rebuild ne rejoue pas).

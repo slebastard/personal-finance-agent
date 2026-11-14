@@ -1,5 +1,6 @@
 {
-  "_comment": "Faits que Finary ignore. Les entrées dont l'account_id commence par `_` sont ignorées. `pfa rebuild` après modification.",
+  "_comment": "display_name : le nom affiché dans la barre du haut. Faits que Finary ignore. Les entrées dont l'account_id commence par `_` sont ignorées. `pfa rebuild` après modification.",
+  "display_name": "Prénom Nom",
   "pea_contributions_total": {
     "<finary-account-uuid>": 0
   },

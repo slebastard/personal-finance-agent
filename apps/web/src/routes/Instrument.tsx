@@ -9,7 +9,8 @@ import {
   eur, pct, signCls,
 } from '../api/format';
 import { Chart } from '../charts/Chart';
-import { palette } from '../charts/theme';
+import { Figure } from '../components/Delta';
+import { palette, withAlpha, echarts } from '../charts/theme';
 import { tickSeries } from '../charts/ticks';
 import { Card, Segmented, TableTwin, Tile } from '../components/ui';
 import { FundCompanies } from '../components/FundCompanies';
@@ -84,15 +85,26 @@ function perfChart(perf: Record<string, number | undefined>): EChartsOption {
 }
 
 function historyChart(h: { asOf: string; value: number }[]): EChartsOption {
+  const line = palette.series1();
   return {
-    grid: { left: 8, right: 24, top: 24, bottom: 8, containLabel: true },
-    xAxis: { type: 'category', data: h.map((p) => p.asOf), axisLabel: { color: palette.muted() } },
+    grid: { left: 8, right: 56, top: 28, bottom: 8, containLabel: true },
+    xAxis: { type: 'category', data: h.map((p) => p.asOf), axisLabel: { color: palette.muted() },
+             boundaryGap: false },
     yAxis: { type: 'value', scale: true, axisLabel: { color: palette.muted(),
              formatter: (v: number) => eur(v) }, splitLine: { lineStyle: { color: palette.grid() } } },
     tooltip: { trigger: 'axis', formatter: (p: any) => `${p[0].axisValue}<br/><b>${eur(p[0].value)}</b>` },
-    series: [{ type: 'line', symbolSize: 9, data: h.map((p) => p.value),
-               lineStyle: { width: 2, color: palette.series1() },
-               itemStyle: { color: palette.series1() } }],
+    series: [{
+      type: 'line', data: h.map((p) => p.value),
+      // a gentle curve only when there are enough points for it to mean something
+      smooth: h.length > 3 ? 0.25 : false,
+      lineStyle: { width: 2, color: line }, itemStyle: { color: line, borderColor: palette.surface(), borderWidth: 2 },
+      symbolSize: 9,
+      areaStyle: { color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+        { offset: 0, color: withAlpha(line, 0.26) }, { offset: 1, color: withAlpha(line, 0) }]) },
+      // the latest value is named at the end of the line instead of making the reader hunt for it
+      endLabel: { show: true, formatter: (p: any) => eur(p.value as number), color: palette.text(),
+                  fontSize: 12, distance: 8 },
+    }],
   };
 }
 
@@ -132,7 +144,7 @@ export default function Instrument() {
       <header className="app">
         <div>
           <h1>{d.name}</h1>
-          <div className="hero">{eur(p.value)}</div>
+          <div className="hero"><Figure text={eur(p.value)} /></div>
           <div className="sub">{d.isin} · {envelopes.join(', ')}</div>
         </div>
         <div className="sub">Au {d.asOf}</div>

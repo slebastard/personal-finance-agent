@@ -38,6 +38,7 @@ export class HealthController {
       latestAsOf: snapshots.at(-1) ?? null,
       rulesVerifiedOn: this.reference.verifiedOn,
       transactionRange: this.flows.range(),
+      userName: this.reference.userName,
       lastRun: lastRun
         ? { runId: lastRun.run_id, kind: lastRun.kind, status: lastRun.status,
             startedAt: lastRun.started_at }

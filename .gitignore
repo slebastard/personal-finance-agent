@@ -41,3 +41,6 @@ __pycache__/
 .DS_Store
 .pnpm-store/
 .claude/settings.local.json
+
+# third-party design references (screenshots of other designers' work): never publish
+/design-inspiration-*

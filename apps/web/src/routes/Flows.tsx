@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import type { EChartsOption } from 'echarts';
 import { api } from '../api/client';
+import { Figure } from '../components/Delta';
 import { CATEGORY_LABELS, FLOW_LABELS, categoryLabel, eur, monthLabel, pct, signCls }
   from '../api/format';
 import { Chart } from '../charts/Chart';
@@ -40,14 +41,14 @@ function trend(monthly: FlowsDto['monthly']): EChartsOption {
     yAxis: { type: 'value', axisLabel: { formatter: (v: number) => eur(v) } },
     series: [
       { name: 'Revenus', type: 'bar', stack: 'flux', barWidth: '55%',
-        itemStyle: { color: palette.good(), borderRadius: [4, 4, 0, 0] },
+        itemStyle: { color: palette.cat(1), borderRadius: [4, 4, 0, 0] },
         data: monthly.map((m) => m.income) },
       { name: 'Consommation', type: 'bar', stack: 'flux',
-        itemStyle: { color: palette.bad(), borderRadius: [0, 0, 4, 4] },
+        itemStyle: { color: palette.cat(2), borderRadius: [0, 0, 4, 4] },
         data: monthly.map((m) => m.spending) },
       { name: 'Épargne nette', type: 'line', symbolSize: 8, smooth: false,
-        lineStyle: { width: 2, color: palette.series1() },
-        itemStyle: { color: palette.series1(),
+        lineStyle: { width: 2, color: palette.text() },
+        itemStyle: { color: palette.text(),
                      borderColor: palette.surface(), borderWidth: 2 },
         data: monthly.map((m) => m.net) },
     ],
@@ -106,7 +107,7 @@ export default function Flows() {
       <header className="app">
         <div>
           <h1>Flux · {d ? `${d.from} → ${d.to}` : '…'}</h1>
-          <div className="hero">{eur(d?.net ?? null)}</div>
+          <div className="hero"><Figure text={eur(d?.net ?? null)} /></div>
           <div className="sub">
             épargne nette sur la période
             {d && d.months >= 1 && ` · ${eur(d.net / d.months)} par mois`}
@@ -117,7 +118,7 @@ export default function Flows() {
 
       <PeriodPicker state={period} onChange={setPeriod} range={range} />
 
-      <div className={flows.isFetching ? 'loading' : undefined}>
+      <div className={`stack${flows.isFetching ? ' loading' : ''}`}>
         <section className="tiles">
           <Tile label="Revenus externes" value={eur(d?.byNature.income.amount ?? null)}
                 delta={d ? `${d.byNature.income.count} mouvements` : undefined} />

@@ -1,9 +1,24 @@
 <!doctype html>
-<html lang="fr" data-theme="auto">
+<html lang="fr" data-theme="light">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
     <title>Patrimoine</title>
+    <!-- Runs BEFORE first paint: resolves the saved choice (system | light | dark) into data-theme, so
+         there is no flash of the wrong theme. ThemeProvider keeps it in sync afterwards. -->
+    <script>
+      (function () {
+        try {
+          var pref = localStorage.getItem('pfa-theme') || 'system';
+          var dark = pref === 'dark' || (pref === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          var h = document.documentElement;
+          h.dataset.theme = dark ? 'dark' : 'light';
+          h.dataset.themePref = pref;
+          h.style.colorScheme = dark ? 'dark' : 'light';
+        } catch (e) { /* storage blocked: stay on light */ }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

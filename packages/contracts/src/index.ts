@@ -25,6 +25,8 @@ export interface MetaDto {
   rulesVerifiedOn: string;
   transactionRange: { from: string; to: string } | null;
   lastRun: { runId: string; kind: string; status: string; startedAt: string | null } | null;
+  /** `display_name` from the private profile/manual_inputs.json; null when not set. */
+  userName: string | null;
 }
 
 export interface PositionDto {

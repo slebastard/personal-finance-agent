@@ -19,19 +19,23 @@ const css = (name: string, fallback: string) =>
  * scripts/validate_palette.js for colour-vision separation and surface contrast, in both modes.
  */
 export function registerTheme(): string {
-  const name = 'pfa';
-  const cats = [1, 2, 3, 4, 5, 6, 7, 8].map((i) => css(`--cat-${i}`, '#2a78d6'));
-  const text = css('--text-primary', '#0b0b0b');
-  const secondary = css('--text-secondary', '#52514e');
-  const muted = css('--muted', '#898781');
-  const grid = css('--grid', '#e1e0d9');
-  const axis = css('--axis', '#c3c2b7');
-  const surface = css('--surface-1', '#fcfcfb');
+  const mode = document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+  const name = `pfa-${mode}`;
+  // registered once per mode: the colours of a mode never change, and a theme switch remounts the page
+  if (registered.has(name)) return name;
+  registered.add(name);
+  const cats = [1, 2, 3, 4, 5, 6, 7, 8].map((i) => css(`--cat-${i}`, '#3ba77a'));
+  const text = css('--text-primary', '#0f1720');
+  const secondary = css('--text-secondary', '#4a5565');
+  const muted = css('--muted', '#667085');
+  const grid = css('--grid', '#e6eaf0');
+  const axis = css('--axis', '#cfd6df');
+  const surface = css('--card', '#ffffff');
 
   echarts.registerTheme(name, {
     color: cats,
     backgroundColor: 'transparent',
-    textStyle: { fontFamily: 'system-ui, -apple-system, "Segoe UI", sans-serif' },
+    textStyle: { fontFamily: '"Outfit Variable", "Outfit", system-ui, sans-serif' },
     title: { textStyle: { color: text } },
     // recessive chrome: hairline grid one shade off the surface, never dashed
     categoryAxis: {
@@ -46,31 +50,41 @@ export function registerTheme(): string {
       axisLabel: { color: muted },
       splitLine: { lineStyle: { color: grid, type: 'solid' } },
     },
-    legend: { textStyle: { color: secondary }, icon: 'roundRect',
-              itemWidth: 10, itemHeight: 10 },
+    legend: { textStyle: { color: secondary }, icon: 'roundRect', itemWidth: 10, itemHeight: 10 },
     tooltip: {
       backgroundColor: surface, borderColor: css('--border', 'rgba(0,0,0,.1)'),
       borderWidth: 1, textStyle: { color: text, fontSize: 12 },
-      extraCssText: 'box-shadow:0 4px 16px rgba(0,0,0,.12);border-radius:8px;',
+      extraCssText: 'box-shadow:0 10px 30px rgba(0,0,0,.18);border-radius:12px;padding:10px 12px;',
     },
   });
   return name;
 }
 
+const registered = new Set<string>();
+
+/** "#3ba77a" + 0.25 -> "rgba(59,167,122,0.25)": for the soft area under a line. */
+export const withAlpha = (hex: string, a: number): string => {
+  const n = hex.replace('#', '');
+  const [r, g, b] = [0, 2, 4].map((i) => parseInt(n.slice(i, i + 2), 16));
+  return `rgba(${r},${g},${b},${a})`;
+};
+
 export const palette = {
-  cat: (i: number) => css(`--cat-${((i - 1) % 8) + 1}`, '#2a78d6'),
+  cat: (i: number) => css(`--cat-${((i - 1) % 8) + 1}`, '#3ba77a'),
   catInk: (i: number) => css(`--cat-${((i - 1) % 8) + 1}-ink`, '#0b0b0b'),
   /** Ordinal quality ramp, 1 (low) .. 5 (high). */
   quality: (i: number) => css(`--q-${Math.min(Math.max(i, 1), 5)}`, '#2a78d6'),
   qualityInk: (i: number) => css(`--q-ink-${Math.min(Math.max(i, 1), 5)}`, '#ffffff'),
-  series1: () => css('--series-1', '#2a78d6'),
+  series1: () => css('--series-1', '#3ba77a'),
+  gain: () => css('--gain', '#006300'),
+  loss: () => css('--loss', '#d03b3b'),
   good: () => css('--good', '#006300'),
   bad: () => css('--bad', '#d03b3b'),
   axis: () => css('--axis', '#c3c2b7'),
   grid: () => css('--grid', '#e1e0d9'),
   text: () => css('--text-primary', '#0b0b0b'),
   muted: () => css('--muted', '#898781'),
-  surface: () => css('--surface-1', '#fcfcfb'),
+  surface: () => css('--card', '#ffffff'),
   target: () => css('--target', '#0b0b0b'),
 };
 

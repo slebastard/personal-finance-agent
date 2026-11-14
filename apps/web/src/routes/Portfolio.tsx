@@ -4,13 +4,14 @@ import type { EChartsOption } from 'echarts';
 import { api } from '../api/client';
 import {
   ASSET_LABELS, COUNTRY_LABELS, ENVELOPE_LABELS, REGION_LABELS, SECTOR_LABELS,
-  eur, pct, signCls,
+  eur, pct, signCls, signedEur,
 } from '../api/format';
 import { Chart } from '../charts/Chart';
 import { palette } from '../charts/theme';
 import { tickSeries } from '../charts/ticks';
 import { Card, TableTwin, Tile } from '../components/ui';
 import { LookthroughBlock } from '../components/LookthroughBlock';
+import { Delta, Figure } from '../components/Delta';
 import type { BucketRow } from '@pfa/contracts';
 
 /** Colour follows the ENVELOPE, never its rank: adding or emptying one never repaints the others.
@@ -108,12 +109,10 @@ export default function Portfolio() {
       <header className="app">
         <div>
           <h1>Patrimoine financier · au {data.asOf}</h1>
-          <div className="hero">{eur(data.totalValue)}</div>
+          <div className="hero"><Figure text={eur(data.totalValue)} /></div>
           <div className="sub">
             {data.changeVsPrevious !== null && (
-              <span className={signCls(data.changeVsPrevious)}>
-                {data.changeVsPrevious > 0 ? '▲' : '▼'} {eur(data.changeVsPrevious)}
-              </span>)}
+              <Delta value={data.changeVsPrevious}>{signedEur(data.changeVsPrevious)}</Delta>)}
             {data.previousAsOf && ` depuis le ${data.previousAsOf}`}
           </div>
         </div>

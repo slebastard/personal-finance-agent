@@ -36,6 +36,7 @@ export class ReferenceService {
   /** profile/manual_inputs.json: facts Finary cannot know. Explains figures, never computes one. */
   private get manual() { return this.load<Record<string, any>>('manual.json'); }
   get closedAccounts(): Record<string, any> { return this.manual['closed_accounts'] ?? {}; }
+  get userName(): string | null { return (this.manual['display_name'] as string | undefined) ?? null; }
   get receivables(): Record<string, any>[] { return this.manual['receivables'] ?? []; }
   /** profile/etf_proxies.json: which fund borrows its constituents from which ETF. */
   get etfProxies(): Record<string, any> { return this.load<Record<string, any>>('etf_proxies.json')['funds'] ?? {}; }

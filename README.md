@@ -113,6 +113,14 @@ la base à chaque requête (et rouvre le fichier si `pfa rebuild` l'a remplacé)
 Routes : `GET /api/v1/{health,meta,report,exposure,positions,instruments/:isin}`,
 `GET /api/v1/flows{,/transactions,/savings-capacity}`.
 
+### Interface
+
+Un rail latéral à icônes (Patrimoine, Flux) qui se déplie au survol, au focus clavier ou au clic sur le logo ;
+une barre du haut (date du dernier snapshot, nom d'utilisateur, thème) ; des boîtes séparées par un écart
+fixe sur un fond à points. Le thème suit le système par défaut, avec bascule **système / clair / sombre**
+mémorisée. Courbes et barres sont en émeraude ; les gains et pertes ont leurs propres couleurs, toujours
+accompagnées d'une flèche et du signe. Le nom affiché vient de `display_name` dans `profile/manual_inputs.json`.
+
 ### Onglet Portefeuille
 
 Total, Δ depuis le snapshot précédent, changement de périmètre, plus-value latente, frais, et
