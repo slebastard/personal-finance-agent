@@ -1,0 +1,16 @@
+{
+  "_comment": "Allocation cible (fractions). asset_class sur le portefeuille total ; region/sector sur la poche actions. VALEURS D'EXEMPLE : à remplacer par les tiens (cf. /advise).",
+  "asset_class": {
+    "equity": 0.6,
+    "fonds_euros": 0.1,
+    "cash": 0.3
+  },
+  "region": {
+    "North America": 0.6,
+    "Europe ex-France": 0.15,
+    "France": 0.07,
+    "Japan": 0.05,
+    "Asia-Pacific developed": 0.03,
+    "Emerging markets": 0.1
+  }
+}

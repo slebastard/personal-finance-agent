@@ -1,0 +1,22 @@
+{
+  "_comment": "Pour chaque fonds DÉTENU : d'où viennent ses sociétés. `etf/holdings` d'un ETF SYNTHÉTIQUE (swap) renvoie son panier de collatéral, pas son indice ; on interroge donc un ETF PHYSIQUE du même indice (approximation, étiquetée et mesurée). kind : self | physical_proxy | none | to_find. color_slot : emplacement de couleur stable (1–8). Copie en `etf_proxies.json` (privé : il révèle tes fonds).",
+  "funds": {
+    "IE00B4L5Y983": {
+      "kind": "self",
+      "color_slot": 1,
+      "note": "ETF physique : ses propres lignes."
+    },
+    "LU1681043599": {
+      "kind": "physical_proxy",
+      "holdings_from": "IE00B4L5Y983",
+      "index": "MSCI World",
+      "color_slot": 2,
+      "verified_on": null,
+      "note": "ETF synthétique ← ETF physique du même indice."
+    },
+    "FR0000000000": {
+      "kind": "none",
+      "note": "Fonds actif : non couvert."
+    }
+  }
+}

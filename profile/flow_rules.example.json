@@ -1,0 +1,61 @@
+{
+  "_comment": "Classification des flux en nature (income | spending | internal | refund | provisional | unclassified). Les règles sur LIBELLÉ passent avant celles sur sous-catégorie ; la première qui matche gagne. Bankin' catégorise CE QU'EST une transaction, pas la NATURE du flux : le libellé dit la vérité. `regex: true` pour une expression régulière, sinon sous-chaîne (insensible à la casse et aux accents). `period` : un flux payé du jour 1 au `day_lte` du mois appartient au mois `shift_months` (ex. salaire versé le 2 pour le mois précédent). Copie en `flow_rules.json` (privé) et ajoute TES libellés (employeur, comptes à toi…).",
+  "amount_review_threshold": 2000,
+  "rules": [
+    {
+      "id": "transfer-fees",
+      "match_label": "frais.*vir|vir.*frais",
+      "regex": true,
+      "flow": "spending",
+      "_why": "Frais sur virement : de vrais coûts, à garder AVANT les règles de virements internes."
+    },
+    {
+      "id": "salary-example",
+      "match_label": "mon employeur",
+      "flow": "income",
+      "period": {
+        "day_lte": 5,
+        "shift_months": -1
+      },
+      "_why": "EXEMPLE : remplace par le libellé de ton employeur."
+    },
+    {
+      "id": "pea-contribution",
+      "match_label": "vir s/ pea",
+      "flow": "internal",
+      "_why": "Versements sur ton PEA : de l'épargne, pas de la consommation."
+    },
+    {
+      "id": "livret-a-fill",
+      "match_label": "remplissage livret",
+      "flow": "internal"
+    },
+    {
+      "id": "account-closure",
+      "match_label": "cloture",
+      "flow": "internal"
+    },
+    {
+      "id": "tax-refund",
+      "match_label": "dgfip|remb impot",
+      "regex": true,
+      "flow": "refund"
+    },
+    {
+      "id": "bank-savings",
+      "match_subcategory": "Savings",
+      "flow": "internal"
+    },
+    {
+      "id": "explicit-internal",
+      "match_subcategory": "Internal transfer",
+      "flow": "internal"
+    },
+    {
+      "id": "refunds-residual",
+      "match_subcategory": "Refunds",
+      "flow": "refund"
+    }
+  ],
+  "_not_rules": "La sous-catégorie 'Transfer' n'est DÉLIBÉRÉMENT pas une règle : elle mélange virements vers ses propres comptes et virements vers des tiers."
+}

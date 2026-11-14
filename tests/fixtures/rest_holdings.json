@@ -1,0 +1,62 @@
+{
+  "_comment": "Synthetic /v1/assets/{id}/holdings payloads, keyed by asset id. Shape is identical between REST and the MCP `holdings` tool, which is why the MCP fallback needs no separate mapper. acc-livret is absent on purpose: an account with no holdings at all.",
+  "acc-pea": {
+    "data": [
+      {
+        "id": "h-fiat-1",
+        "type": "fiat-holdings",
+        "attributes": {"quantity": "1000.00", "category": "investments",
+                       "current_value": "1000.00", "current_value_currency": "EUR"},
+        "relationships": {"asset": {"data": {"type": "assets", "id": "acc-pea"}}}
+      },
+      {
+        "id": "h-sec-1",
+        "type": "security-holdings",
+        "attributes": {"quantity": "10.0", "buying_price": "500.00", "buying_price_currency": "EUR",
+                       "current_value": "7000.00", "current_value_currency": "EUR"},
+        "relationships": {"asset": {"data": {"type": "assets", "id": "acc-pea"}},
+                          "security": {"data": {"type": "securities", "id": "sec-world"}}}
+      }
+    ],
+    "included": [
+      {
+        "id": "sec-world",
+        "type": "securities",
+        "attributes": {"isin": "LU1681043599", "symbol": "CW8", "name": "Test World ETF",
+                       "security_type": "etf", "current_price": "700.00",
+                       "current_price_currency_code": "EUR", "expense_ratio": "0.0038"}
+      }
+    ],
+    "meta": {"total": 2, "limit": 100, "offset": 0, "has_more": false}
+  },
+  "acc-av": {
+    "data": [
+      {
+        "id": "h-fe-1",
+        "type": "fond-euro-holdings",
+        "attributes": {"name": "FONDS EUROS TEST", "current_value": "500.00",
+                       "current_value_currency": "EUR", "annual_yield": "0.0"},
+        "relationships": {"asset": {"data": {"type": "assets", "id": "acc-av"}}}
+      },
+      {
+        "id": "h-sec-2",
+        "type": "security-holdings",
+        "attributes": {"quantity": "2.0", "buying_price": "1400.00", "buying_price_currency": "EUR",
+                       "current_value": "3000.00", "current_value_currency": "EUR"},
+        "relationships": {"asset": {"data": {"type": "assets", "id": "acc-av"}},
+                          "security": {"data": {"type": "securities", "id": "sec-fund"}}}
+      }
+    ],
+    "included": [
+      {
+        "id": "sec-fund",
+        "type": "securities",
+        "attributes": {"isin": "FR0010298596", "symbol": "TSTF", "name": "Test Fund C",
+                       "security_type": "fund", "current_price": "1500.00",
+                       "current_price_currency_code": "EUR", "expense_ratio": "0.015"}
+      }
+    ],
+    "meta": {"total": 2, "limit": 100, "offset": 0, "has_more": false}
+  },
+  "acc-livret": {"data": [], "included": [], "meta": {"total": 0, "limit": 100, "offset": 0, "has_more": false}}
+}

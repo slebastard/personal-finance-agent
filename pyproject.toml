@@ -1,0 +1,9 @@
+[project]
+name = "pfa"
+version = "0.1.0"
+description = "Personal finance agent: deterministic data layer, analytics and dashboards (stdlib only)"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+pfa = "pfa.cli:main"

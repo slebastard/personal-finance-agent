@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - name: Privacy guard (no personal data in the repository)
+        run: python3 scripts/check_no_personal_data.py --all
+      - name: Python tests
+        run: python3 -m unittest discover tests
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - name: TypeScript tests (parity against the Python oracle, on throwaway trees)
+        run: pnpm test
+      - name: Palette contrast checks
+        run: |
+          node scripts/validate_palette.js "#2a78d6,#eb6834,#1baf7a,#eda100,#e87ba4,#008300,#6250d6,#e34948" --mode light
+          node scripts/validate_palette.js "#3987e5,#d95926,#199e70,#c98500,#d55181,#008300,#9085e9,#e66767" --mode dark --surface "#1a1a19"

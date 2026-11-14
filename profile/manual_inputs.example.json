@@ -1,0 +1,22 @@
+{
+  "_comment": "Faits que Finary ignore. Les entrées dont l'account_id commence par `_` sont ignorées. `pfa rebuild` après modification.",
+  "pea_contributions_total": {
+    "<finary-account-uuid>": 0
+  },
+  "account_fees": {
+    "<finary-account-uuid>": 0.005
+  },
+  "cash_flows": [
+    {
+      "account_id": "_example",
+      "date": "2026-01-15",
+      "amount": 500,
+      "note": "positif = versement, négatif = retrait"
+    }
+  ],
+  "closed_accounts": {},
+  "account_opened_on": {
+    "<finary-account-uuid>": "2020-01-31"
+  },
+  "receivables": []
+}

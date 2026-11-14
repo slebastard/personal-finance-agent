@@ -1,0 +1,29 @@
+{
+  "enabledMcpjsonServers": ["finary"],
+  "permissions": {
+    "allow": [
+      "mcp__finary__get_portfolio_overview",
+      "mcp__finary__accounts",
+      "mcp__finary__holdings",
+      "mcp__finary__goals",
+      "mcp__finary__profiles",
+      "mcp__finary__get_me",
+      "mcp__finary__get_budget_overview",
+      "mcp__finary__search_spending",
+      "mcp__finary__simulate_compound_interest",
+      "Bash(python3 -m pfa:*)",
+      "Bash(python3 -m unittest:*)",
+      "Bash(open dashboards/:*)",
+      "WebFetch(domain:www.boursorama.com)",
+      "WebFetch(domain:boursorama.com)",
+      "WebFetch(domain:www.justetf.com)",
+      "WebFetch(domain:www.amf-france.org)",
+      "WebFetch(domain:www.service-public.fr)",
+      "WebSearch"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Bash(rm -rf:*)"
+    ]
+  }
+}

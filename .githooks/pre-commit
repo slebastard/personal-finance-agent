@@ -1,0 +1,4 @@
+#!/bin/sh
+# Refuse a commit that contains personal data. Enabled by `python3 -m pfa setup`
+# (git config core.hooksPath .githooks).
+exec python3 scripts/check_no_personal_data.py --staged

@@ -1,0 +1,161 @@
+/* Palette carried over verbatim from pfa/dashboard.py — validated with
+   scripts/validate_palette.js in BOTH light and dark modes. Any new hue must be re-validated.
+   --cat-N are categorical slots assigned by ENTITY, never by rank; --cat-N-ink is the label ink
+   chosen by measured contrast against that slot, not by eye. */
+:root {
+  color-scheme: light dark;
+  --page: #f9f9f7; --surface-1: #fcfcfb;
+  --text-primary: #0b0b0b; --text-secondary: #52514e; --muted: #898781;
+  --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11, 11, 11, .10);
+  --series-1: #2a78d6; --series-1-wash: rgba(42, 120, 214, .10);
+  --target: #0b0b0b; --good: #006300; --bad: #d03b3b; --warn: #fab219;
+  --cat-1: #2a78d6; --cat-2: #eb6834; --cat-3: #1baf7a; --cat-4: #eda100;
+  --cat-5: #e87ba4; --cat-6: #008300; --cat-7: #6250d6; --cat-8: #e34948;
+  /* Quality ramp (ordinal, 5 steps, low -> high): one blue hue, validated with
+     scripts/validate_palette.js --ordinal in light AND dark. In light, MORE = DARKER; in dark the
+     anchor flips and MORE = LIGHTER. --q-ink-N is the label ink chosen by measured contrast. */
+  --q-1: #86b6ef; --q-2: #5598e7; --q-3: #2a78d6; --q-4: #1c5cab; --q-5: #104281;
+  --q-ink-1: #0b0b0b; --q-ink-2: #0b0b0b; --q-ink-3: #ffffff; --q-ink-4: #ffffff; --q-ink-5: #ffffff;
+  --cat-1-ink: #0b0b0b; --cat-2-ink: #0b0b0b; --cat-3-ink: #0b0b0b; --cat-4-ink: #0b0b0b;
+  --cat-5-ink: #0b0b0b; --cat-6-ink: #ffffff; --cat-7-ink: #ffffff; --cat-8-ink: #0b0b0b;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --page: #0d0d0d; --surface-1: #1a1a19;
+    --text-primary: #f0efec; --text-secondary: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255, 255, 255, .10);
+    --series-1: #3987e5; --series-1-wash: rgba(57, 135, 229, .12);
+    --target: #f0efec; --good: #0ca30c; --bad: #e66767;
+    --cat-1: #3987e5; --cat-2: #d95926; --cat-3: #199e70; --cat-4: #c98500;
+    --cat-5: #d55181; --cat-6: #008300; --cat-7: #9085e9; --cat-8: #e66767;
+    --cat-7-ink: #0b0b0b;
+    --q-1: #184f95; --q-2: #256abf; --q-3: #3987e5; --q-4: #6da7ec; --q-5: #9ec5f4;
+    --q-ink-1: #ffffff; --q-ink-2: #ffffff; --q-ink-3: #0b0b0b; --q-ink-4: #0b0b0b; --q-ink-5: #0b0b0b;
+  }
+}
+:root[data-theme="dark"] {
+  --page: #0d0d0d; --surface-1: #1a1a19;
+  --text-primary: #f0efec; --text-secondary: #c3c2b7;
+  --grid: #2c2c2a; --axis: #383835; --border: rgba(255, 255, 255, .10);
+  --series-1: #3987e5; --series-1-wash: rgba(57, 135, 229, .12);
+  --target: #f0efec; --good: #0ca30c; --bad: #e66767;
+  --cat-1: #3987e5; --cat-2: #d95926; --cat-3: #199e70; --cat-4: #c98500;
+  --cat-5: #d55181; --cat-6: #008300; --cat-7: #9085e9; --cat-8: #e66767;
+  --cat-7-ink: #0b0b0b;
+  --q-1: #184f95; --q-2: #256abf; --q-3: #3987e5; --q-4: #6da7ec; --q-5: #9ec5f4;
+  --q-ink-1: #ffffff; --q-ink-2: #ffffff; --q-ink-3: #0b0b0b; --q-ink-4: #0b0b0b; --q-ink-5: #0b0b0b;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--page); color: var(--text-primary);
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+a { color: inherit; }
+.wrap { max-width: 1180px; margin: 0 auto; padding: 24px 16px 48px; }
+
+header.app { display: flex; justify-content: space-between; align-items: flex-end;
+  flex-wrap: wrap; gap: 12px; margin-bottom: 18px; }
+h1 { font-size: 15px; font-weight: 600; margin: 0; color: var(--text-secondary); }
+/* proportional figures on display numbers: tabular-nums makes 121 look loose at this size */
+.hero { font-size: 52px; font-weight: 600; letter-spacing: -.02em; line-height: 1.1; margin-top: 4px; }
+.sub { color: var(--text-secondary); font-size: 14px; }
+.up { color: var(--good); } .down { color: var(--bad); }
+
+nav.tabs { display: flex; gap: 4px; margin-bottom: 16px; }
+nav.tabs a { padding: 8px 16px; border-radius: 9px; font-size: 14px; text-decoration: none;
+  color: var(--text-secondary); border: 1px solid transparent; }
+nav.tabs a.on { background: var(--surface-1); border-color: var(--border);
+  color: var(--text-primary); font-weight: 600; }
+
+.card { background: var(--surface-1); border: 1px solid var(--border);
+  border-radius: 12px; padding: 16px; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px; margin-bottom: 12px; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 12px; margin-bottom: 12px; align-items: start; }
+.tile .label { font-size: 13px; color: var(--text-secondary); }
+.tile .value { font-size: 26px; font-weight: 600; margin-top: 6px; }
+.tile .delta { font-size: 13px; margin-top: 4px; color: var(--text-secondary); }
+h2 { font-size: 14px; font-weight: 600; margin: 0 0 4px; }
+.cap { font-size: 12px; color: var(--muted); margin: 0 0 12px; }
+
+.filters { display: flex; flex-wrap: wrap; gap: 18px; align-items: center;
+  margin: 0 0 12px; padding: 10px 14px; background: var(--surface-1);
+  border: 1px solid var(--border); border-radius: 12px; }
+.fgroup { display: flex; align-items: center; gap: 8px; }
+.fgroup > span { font-size: 12px; color: var(--muted); }
+.seg { display: inline-flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.seg button { appearance: none; border: 0; background: transparent; color: var(--text-secondary);
+  font: inherit; font-size: 12px; padding: 5px 11px; cursor: pointer; }
+.seg button + button { border-left: 1px solid var(--border); }
+.seg button[aria-pressed="true"] { background: var(--series-1-wash);
+  color: var(--text-primary); font-weight: 600; }
+input[type="date"], select { font: inherit; font-size: 12px; padding: 4px 8px;
+  border: 1px solid var(--border); border-radius: 8px;
+  background: var(--page); color: var(--text-primary); }
+
+table.tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
+.tbl th { text-align: left; color: var(--muted); font-weight: 500;
+  border-bottom: 1px solid var(--grid); padding: 6px 8px; white-space: nowrap; }
+.tbl td { border-bottom: 1px solid var(--grid); padding: 6px 8px; vertical-align: top; }
+.tbl td.n, .tbl th.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tbl tr.sub td { color: var(--text-secondary); font-size: 12px; }
+.tbl tr.sub td:first-child { padding-left: 26px; }
+details summary { cursor: pointer; color: var(--text-secondary); font-size: 13px; }
+.pill { display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 999px;
+  border: 1px solid var(--border); color: var(--text-secondary); }
+.pill.warn { border-color: var(--warn); color: var(--text-primary); }
+.note { font-size: 13px; line-height: 1.55; color: var(--text-secondary);
+  background: var(--series-1-wash); border-radius: 8px; padding: 12px 14px; margin: 0; }
+.loading { opacity: .55; transition: opacity .15s; }   /* hold the frame, never a skeleton flash */
+footer { margin-top: 20px; color: var(--muted); font-size: 12px; }
+
+/* receivables: money out of the Finary total that comes back -- dashed = 'not in the total' */
+.ghost { border: 1.5px dashed var(--axis); border-radius: 8px; padding: 4px 12px 8px; }
+
+.crumb { margin: 4px 0 8px; font-size: 13px; }
+.crumb a, td a { color: var(--series-1); text-decoration: none; }
+.crumb a:hover, td a:hover { text-decoration: underline; }
+.grid2.start { align-items: start; }
+
+/* ---- company-level views ------------------------------------------------------------------ */
+.def { position: relative; border-bottom: 1px dotted var(--muted); cursor: help; }
+.def .pop { display: none; position: absolute; z-index: 20; left: 0; top: 100%; margin-top: 6px;
+  width: min(380px, 80vw); padding: 10px 12px; border-radius: 8px; font-size: 12px; line-height: 1.45;
+  background: var(--surface-1); color: var(--text-primary); border: 1px solid var(--border);
+  box-shadow: 0 6px 24px rgba(0,0,0,.25); text-align: left; font-weight: 400; }
+.def:hover .pop, .def:focus .pop, .def:focus-within .pop { display: block; }
+.def .pop b { display: block; margin-bottom: 4px; }
+.def .pop .row { display: block; margin-top: 3px; }
+.def .pop .row i { font-style: normal; color: var(--muted); margin-right: 4px; }
+.def .pop .src { display: block; margin-top: 6px; color: var(--muted); font-size: 11px; }
+.ranges { display: grid; gap: 6px; }
+.rhead, .rrow { display: grid; grid-template-columns: 1.3fr 1.6fr 1.1fr .6fr; gap: 10px; align-items: center; }
+.rrow { padding: 4px 0; border-top: 1px solid var(--grid); font-size: 13px; }
+.n { text-align: right; }
+.warn-t { color: var(--warn); }
+.banner { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: baseline; padding: 10px 14px;
+  border: 1px solid var(--border); border-radius: 10px; background: var(--series-1-wash);
+  font-size: 13px; margin: 8px 0 14px; }
+.banner.warn { border-color: var(--warn); }
+.legend-q { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12px; color: var(--text-secondary);
+  align-items: center; margin: 4px 0 8px; }
+.legend-q i { display: inline-block; width: 14px; height: 14px; border-radius: 3px; margin-right: 5px;
+  vertical-align: -2px; }
+.sortable th { cursor: pointer; user-select: none; }
+.prompts { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+.prompt { border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; background: var(--surface-1); }
+.prompt h3 { margin: 0 0 6px; font-size: 14px; }
+.prompt .q { font-style: italic; margin: 4px 0 8px; }
+.prompt .ev { margin: 6px 0; font-size: 13px; }
+.prompt ul { margin: 6px 0; padding-left: 18px; }
+.prompt .act { display: flex; gap: 12px; align-items: center; margin-top: 8px; }
+.btn { appearance: none; border: 1px solid var(--border); background: transparent; color: var(--text-primary);
+  border-radius: 8px; padding: 4px 10px; font-size: 12px; cursor: pointer; }
+.btn:hover { background: var(--series-1-wash); }
+.vendor { opacity: .85; border-style: dashed; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-size: 12px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--border); color: var(--text-secondary); }
+.section { margin: 26px 0 4px; font-size: 18px; }
+.tbl .pill { margin-left: 6px; }

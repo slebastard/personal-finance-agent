@@ -1,0 +1,12 @@
+{
+  "_comment": "Copie ce fichier en `account_map.json` (privé, jamais committé). UUID de compte Finary -> enveloppe canonique. Finary ne distingue pas PEA / assurance-vie / compte-titres (tous `investment`) : cette correspondance est une décision, pas une inférence, et `pfa sync` ÉCHOUE sur un compte absent d'ici. Enveloppes valides : voir ENVELOPES dans pfa/schema.py. Mets dans `ignore` les comptes à exclure du périmètre (crédits, comptes d'une autre personne…).",
+  "accounts": {
+    "00000000-0000-0000-0000-000000000001": "livret_a",
+    "00000000-0000-0000-0000-000000000002": "pea",
+    "00000000-0000-0000-0000-000000000003": "assurance_vie"
+  },
+  "_names": {
+    "00000000-0000-0000-0000-000000000001": "Livret A (exemple)"
+  },
+  "ignore": []
+}

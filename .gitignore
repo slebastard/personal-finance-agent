@@ -1,0 +1,43 @@
+# ---------------------------------------------------------------------------------------------
+# PRIVACY: this repository holds CODE and SKILLS only. Everything below is the user's data and
+# must never be committed. `python3 -m pfa export-data` moves it between machines instead.
+# ---------------------------------------------------------------------------------------------
+
+# secrets
+.env
+.env.*
+*.pem
+*.key
+
+# the user's financial data, notes and generated views
+/data/
+/journal/
+/dashboards/
+/exports/
+/import/
+*.zip
+*.db
+*.db-*
+*.rebuild-backup
+
+# private profile: only the *.example.* templates are versioned (setup copies them to the real names)
+/profile/*
+!/profile/*.example.*
+
+# local design/working notes that quote real figures and funds
+/PLAN-*.md
+/SPEC-*.md
+
+# local privacy denylist (the user's own names, accounts, employer…) read by the pre-commit guard
+/.privacy-denylist
+
+# tooling / build output
+node_modules/
+apps/*/dist/
+packages/*/dist/
+*.tsbuildinfo
+__pycache__/
+*.pyc
+.DS_Store
+.pnpm-store/
+.claude/settings.local.json

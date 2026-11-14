@@ -1,0 +1,19 @@
+{
+  "isin": "FR0011871128",
+  "name": "Amundi PEA S&P 500 ESG (fixture)",
+  "kind": "etf",
+  "ter": 0.0015,
+  "pea_eligible": true,
+  "replication": "synthetic",
+  "index": "S&P 500 ESG",
+  "breakdowns": {
+    "asset_class": {"equity": 1.0},
+    "country": {"Etats-Unis": 97.5, "Irlande": 1.5, "Suisse": 1.0},
+    "sector": {"Technologie de l'information": 33, "Finance": 13, "Santé": 11, "Consommation discrétionnaire": 10,
+               "Services de communication": 9, "Industrie": 8, "Biens de consommation de base": 6, "Énergie": 3,
+               "Immobilier": 2, "Services aux collectivités": 2, "Matériaux": 2}
+  },
+  "performance": {"1y": 0.12, "3y_annualized": 0.11},
+  "sources": [{"url": "https://www.justetf.com/fr/etf-profile.html?isin=FR0011871128", "fetched_at": "2026-10-01"}],
+  "fetched_at": "2026-10-01"
+}

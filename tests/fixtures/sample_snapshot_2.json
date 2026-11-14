@@ -1,0 +1,23 @@
+{
+  "as_of": "2026-10-01",
+  "source": "fixture (fake numbers)",
+  "currency": "EUR",
+  "accounts": [
+    {"id": "acc-livreta", "name": "Livret A", "institution": "Fortuneo", "envelope": "livret_a", "balance": 23150},
+    {"id": "acc-pea", "name": "PEA Fortuneo", "institution": "Fortuneo", "envelope": "pea", "opened_on": "2019-03-15",
+     "balance": 47500,
+     "holdings": [
+       {"isin": "FR0011871128", "name": "Amundi PEA S&P 500 ESG", "kind": "etf", "quantity": 680, "unit_price": 48.0, "value": 32640, "cost_basis": 24600},
+       {"isin": "FR0000121014", "name": "LVMH", "kind": "stock", "quantity": 20, "unit_price": 640, "value": 12800, "cost_basis": 14000}
+     ]},
+    {"id": "acc-av", "name": "Fortuneo Vie", "institution": "Fortuneo", "envelope": "assurance_vie", "opened_on": "2021-06-01",
+     "balance": 31200,
+     "holdings": [
+       {"name": "Fonds euros", "kind": "fonds_euros", "value": 18300},
+       {"isin": "LU1681043599", "name": "Amundi MSCI World", "kind": "etf", "value": 12900, "cost_basis": 9500}
+     ]}
+  ],
+  "cash_flows": [
+    {"account_id": "acc-pea", "date": "2026-06-10", "amount": 3600, "note": "versement"}
+  ]
+}

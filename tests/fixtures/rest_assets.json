@@ -1,0 +1,113 @@
+{
+  "_comment": "Synthetic /v1/assets payload shaped per the Finary OpenAPI 3.1 spec (AssetAttributes + InstitutionConnectionAttributes). Fake amounts on purpose: tests/ is not gitignored. Two connections with different last_successful_sync_at so as_of resolves to the OLDEST (2026-10-09).",
+  "data": [
+    {
+      "id": "acc-pea",
+      "type": "assets",
+      "attributes": {
+        "name": "PEA TEST",
+        "account_type": "investment",
+        "currency": "EUR",
+        "balance": "8000.00",
+        "full_value_eur": "8000.00",
+        "owned_value_eur": "8000.00",
+        "opened_at": "2019-03-15T00:00:00Z",
+        "annual_yield_percent": null,
+        "created_at": "2025-01-04T16:13:32Z",
+        "updated_at": "2026-10-09T18:30:00Z"
+      },
+      "relationships": {
+        "institution_connection": {"data": {"type": "institution-connections", "id": "conn-1"}}
+      }
+    },
+    {
+      "id": "acc-av",
+      "type": "assets",
+      "attributes": {
+        "name": "Assurance-vie TEST",
+        "account_type": "investment",
+        "currency": "EUR",
+        "balance": "3500.00",
+        "full_value_eur": "3500.00",
+        "owned_value_eur": "3500.00",
+        "opened_at": "2021-06-01T00:00:00Z",
+        "annual_yield_percent": null,
+        "created_at": "2025-01-04T16:13:33Z",
+        "updated_at": "2026-10-09T18:30:00Z"
+      },
+      "relationships": {
+        "institution_connection": {"data": {"type": "institution-connections", "id": "conn-1"}}
+      }
+    },
+    {
+      "id": "acc-livret",
+      "type": "assets",
+      "attributes": {
+        "name": "Livret A TEST",
+        "account_type": "saving",
+        "currency": "EUR",
+        "balance": "9000.00",
+        "full_value_eur": "9000.00",
+        "owned_value_eur": "9000.00",
+        "opened_at": "2016-01-04T00:00:00Z",
+        "annual_yield_percent": "1.7",
+        "created_at": "2026-01-01T00:00:00Z",
+        "updated_at": "2026-10-10T07:00:00Z"
+      },
+      "relationships": {
+        "institution_connection": {"data": {"type": "institution-connections", "id": "conn-2"}}
+      }
+    },
+    {
+      "id": "acc-checking",
+      "type": "assets",
+      "attributes": {
+        "name": "Compte courant TEST",
+        "account_type": "checking",
+        "currency": "EUR",
+        "balance": "1500.00",
+        "full_value_eur": "1500.00",
+        "owned_value_eur": "1500.00",
+        "opened_at": null,
+        "annual_yield_percent": null,
+        "created_at": "2024-11-10T21:18:53Z",
+        "updated_at": "2026-10-10T07:00:00Z"
+      },
+      "relationships": {
+        "institution_connection": {"data": {"type": "institution-connections", "id": "conn-2"}}
+      }
+    }
+  ],
+  "included": [
+    {
+      "id": "conn-1",
+      "type": "institution-connections",
+      "attributes": {
+        "sync_status": "success",
+        "state": "connected",
+        "last_sync_at": "2026-10-09T18:30:05Z",
+        "last_successful_sync_at": "2026-10-09T18:30:00Z",
+        "access_expires_at": "2027-04-08T09:59:17Z",
+        "error_message": null,
+        "is_newly_connected": false
+      },
+      "relationships": {"institution": {"data": {"type": "institutions", "id": "inst-1"}}}
+    },
+    {
+      "id": "conn-2",
+      "type": "institution-connections",
+      "attributes": {
+        "sync_status": "success",
+        "state": "connected",
+        "last_sync_at": "2026-10-10T07:00:05Z",
+        "last_successful_sync_at": "2026-10-10T07:00:00Z",
+        "access_expires_at": "2027-01-01T15:28:23Z",
+        "error_message": null,
+        "is_newly_connected": false
+      },
+      "relationships": {"institution": {"data": {"type": "institutions", "id": "inst-2"}}}
+    },
+    {"id": "inst-1", "type": "institutions", "attributes": {"name": "Fortuneo", "slug": "fortuneo"}},
+    {"id": "inst-2", "type": "institutions", "attributes": {"name": "CIC", "slug": "cic"}}
+  ]
+}
